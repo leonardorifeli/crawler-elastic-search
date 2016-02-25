@@ -1,0 +1,18 @@
+{
+    "name": "crawler-elastic-search",
+    "license": "MIT",
+    "type": "library",
+    "description": "Web Crawler to index values on Elastic Search",
+    "autors": [
+        {
+            "name": "Leonardo Rifeli",
+            "email": "leonardorifeli@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Crawler\\Bundle\\": "" }
+    },
+    "require": {
+    }
+}
