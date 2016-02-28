@@ -1,0 +1,6 @@
+routes:
+#  index:
+#    pattern:  /
+#    controller: Silex\Controller\Controller::indexAction
+#    requirements:
+#      _method:  GET

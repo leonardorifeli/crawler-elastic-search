@@ -1,0 +1,7 @@
+database:
+    driver: pdo_mysql
+    host: localhost
+    database: database
+    user: user
+    password:
+    default_language: pt_br

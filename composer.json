@@ -1,8 +1,8 @@
 {
-    "name": "crawler-elastic-search",
+    "name": "silex-example",
     "license": "MIT",
-    "type": "library",
-    "description": "Web Crawler to index values on Elastic Search",
+    "type": "Project",
+    "description": "Example on silex",
     "autors": [
         {
             "name": "Leonardo Rifeli",
@@ -10,9 +10,46 @@
             "role": "Developer"
         }
     ],
-    "autoload": {
-        "psr-4": { "Crawler\\Bundle\\": "" }
-    },
     "require": {
+        "php": ">=5.6.0",
+        "silex/silex": "~2.0@dev",
+        "silex/web-profiler": "~2.0@dev",
+        "symfony/browser-kit": "~2.6",
+        "symfony/class-loader": "~2.6",
+        "symfony/config": "~2.1",
+        "symfony/console": "~2.6",
+        "symfony/css-selector": "~2.6",
+        "symfony/debug": "~2.6",
+        "symfony/finder": "~2.6",
+        "symfony/form": "~2.6",
+        "symfony/monolog-bridge": "~2.6",
+        "symfony/process": "~2.6",
+        "symfony/security": "~2.6",
+        "symfony/translation": "~2.1",
+        "symfony/twig-bridge": "~2.1",
+        "symfony/validator": "~2.6",
+        "symfony/dependency-injection": "dev-master",
+        "symfony/yaml": "~2.1",
+        "doctrine/dbal": "~2.2",
+        "symfony/doctrine-bridge": "2.*",
+        "dflydev/doctrine-orm-service-provider": "2.0.*@dev",
+        "deralex/yaml-config-service-provider": "2.0.*@dev",
+        "symfony/http-kernel": "^2.8",
+        "guzzlehttp/guzzle": "^6.1",
+        "twig/twig": ">=1.8,<2.0-dev"
+    },
+    "autoload": {
+        "psr-4": { "Crawler\\Bundle\\": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "scripts": {
+        "run": [
+            "echo 'Started web server on http://localhost:8888'",
+            "php -S localhost:8888 -t web web/index_dev.php"
+        ]
     }
 }
