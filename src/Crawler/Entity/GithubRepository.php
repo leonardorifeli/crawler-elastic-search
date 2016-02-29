@@ -24,7 +24,7 @@ class GithubRepository
     **/
     private $owner;
 
-    /** @Column(name="title", type="string", length=255, nullable=true) **/
+    /** @Column(name="name", type="string", length=255, nullable=true) **/
     private $name;
 
     /** @Column(name="url", type="string", length=255, nullable=true) **/
