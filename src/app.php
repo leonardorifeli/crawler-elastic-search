@@ -71,8 +71,16 @@ $app->register(new DoctrineOrmServiceProvider, array(
     ),
 ));
 
-$app[''] = function () use ($app) {
-    return new Router($app["orm.em"]);
+$app['github.repository.service'] = function () use ($app) {
+    return new App\Bundle\Crawler\Business\Service\GithubRepositoryService($app["orm.em"]);
+};
+
+$app['github.owner.service'] = function () use ($app) {
+    return new App\Bundle\Crawler\Business\Service\GithubOwnerService($app["orm.em"]);
+};
+
+$app['github.sync.service'] = function () use ($app) {
+    return new App\Bundle\Crawler\Business\Service\GithubSyncService($app["github.repository.service"]);
 };
 
 return $app;
