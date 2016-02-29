@@ -1,6 +1,12 @@
 routes:
-#  index:
-#    pattern:  /
-#    controller: Silex\Controller\Controller::indexAction
-#    requirements:
-#      _method:  GET
+  crawler_github_repositories:
+    pattern:  /github/repositories
+    controller: App\Bundle\Crawler\Controller\GithubRepositoryController::indexAction
+    requirements:
+      _method:  GET
+
+  crawler_github_sync:
+    pattern:  /github/{token}/sync
+    controller: App\Bundle\Crawler\Controller\GithubSyncController::startSync
+    requirements:
+      _method:  GET
