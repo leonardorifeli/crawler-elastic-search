@@ -58,25 +58,24 @@ new Silex\Provider\DoctrineServiceProvider(), array(
 ));
 
 $app->register(new DoctrineOrmServiceProvider, array(
-    "orm.proxies_dir" => "/path/to/proxies",
+    "orm.proxies_dir" => __DIR__."../tmp/proxies",
     "orm.em.options" => array(
         "mappings" => array(
-            // Using actual filesystem paths
             array(
                 "type" => "annotation",
-                "namespace" => "App\Entity",
-                "path" => __DIR__."src/App/Entity",
+                "namespace" => "App\Bundle\Crawler\Entity",
+                "path" => __DIR__."App\Bundle\Crawler\Entity",
             )
         ),
     ),
 ));
 
-$app['github.repository.service'] = function () use ($app) {
-    return new App\Bundle\Crawler\Business\Service\GithubRepositoryService($app["orm.em"]);
-};
-
 $app['github.owner.service'] = function () use ($app) {
     return new App\Bundle\Crawler\Business\Service\GithubOwnerService($app["orm.em"]);
+};
+
+$app['github.repository.service'] = function () use ($app) {
+    return new App\Bundle\Crawler\Business\Service\GithubRepositoryService($app["orm.em"], $app['github.owner.service']);
 };
 
 $app['github.sync.service'] = function () use ($app) {
