@@ -5,3 +5,6 @@ database:
     user: user
     password:
     default_language: pt_br
+
+security:
+    token:
