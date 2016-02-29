@@ -21,13 +21,15 @@ class GithubSyncController
 
     public function startSync(Application $app, $token)
     {
+        set_time_limit(0);
+
         if($token !== $app['config']['security']['token']){
             return new Response(json_encode(['error' => 'invalid token']));
         }
 
-        var_dump($app['config']['security']['token']);
+        $response = $this->getGithubSyncService($app)->startSync();
 
-        die;
+        return;
     }
 
 }
