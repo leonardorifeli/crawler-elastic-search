@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Bundle;
+
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
