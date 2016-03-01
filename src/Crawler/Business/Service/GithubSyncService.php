@@ -34,7 +34,7 @@ class GithubSyncService
                 $entity = $this->createOrUpdateRepository($request);
 
                 if($entity){
-                    echo "#{$entity->getProviderCode()} - Created Repository: {$entity->getName()} <br/>";
+                    echo "#{$entity->getProviderCode()} - Created Repository: {$entity->getName()} <br/> \n";
                 }
             }
 
