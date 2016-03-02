@@ -21,7 +21,7 @@ class GithubSyncService
         $since = 1;
         $response = true;
 
-        while($register !== false) {
+        while($response !== false) {
             $response = $this->getReponse($since);
             $response = json_decode($response->getBody());
 
