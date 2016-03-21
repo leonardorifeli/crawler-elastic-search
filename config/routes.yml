@@ -10,3 +10,9 @@ routes:
     controller: App\Bundle\Crawler\Controller\GithubSyncController::startSync
     requirements:
       _method:  GET
+
+  elasticSearch_sync:
+    pattern: /elastic-search/{token}/index
+    controller: App\Bundle\ElasticSearch\Controller\ElasticSearchSyncController;
+    requirements:
+      _method: GET
