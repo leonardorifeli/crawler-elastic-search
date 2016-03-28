@@ -8,3 +8,6 @@ database:
 
 security:
     token:
+
+elasticSearch:
+    url: "http://leonardorifeli.com:9200"
