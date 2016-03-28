@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', true);
+
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\RoutingServiceProvider;
@@ -80,6 +82,10 @@ $app['github.repository.service'] = function () use ($app) {
 
 $app['github.sync.service'] = function () use ($app) {
     return new App\Bundle\Crawler\Business\Service\GithubSyncService($app["github.repository.service"]);
+};
+
+$app['elasticSearch.sync.service'] = function () use ($app) {
+    return new App\Bundle\ElasticSearch\Business\Service\ElasticSearchSyncService($app['config']['elasticSearch']['url']);
 };
 
 return $app;
