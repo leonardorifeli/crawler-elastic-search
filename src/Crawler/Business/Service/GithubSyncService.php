@@ -3,6 +3,7 @@
 namespace App\Bundle\Crawler\Business\Service;
 
 use GuzzleHttp\Client;
+use App\Bundle\Crawler\Business\Enum\GithubEnum;
 
 class GithubSyncService
 {
@@ -16,8 +17,7 @@ class GithubSyncService
         $this->httpClient = new Client();
     }
 
-    public function startSync()
-    {
+    public function startSync() {
         $since = 1;
         $response = true;
 
@@ -33,7 +33,7 @@ class GithubSyncService
             foreach($response as $key => $request) {
                 $entity = $this->createOrUpdateRepository($request);
 
-                if($entity){
+                if($entity) {
                     echo "#{$entity->getProviderCode()} - Created Repository: {$entity->getName()} <br/> \n";
                 }
             }
@@ -48,27 +48,20 @@ class GithubSyncService
         die;
     }
 
-    private function createOrUpdateRepository($request)
-    {
-        if(!$request){
-            return;
-        }
+    private function createOrUpdateRepository($request) {
+        if(!$request) return;
 
         $entity = $this->githubRepositoryService->getByProvider($request->id);
 
-        if(!$entity) {
-            $entity = $this->githubRepositoryService->createByRequest($request);
-        }
+        if(!$entity) $entity = $this->githubRepositoryService->createByRequest($request);
 
         return $entity;
     }
 
-    private function getReponse($since)
-    {
+    private function getReponse($since) {
         $clientId = "828dc2ffacfca66489ec";
         $clientSecret = "695eb7620fc8ef31ca148c252fca5b8b6fcfc689";
-
-        return $this->httpClient->request('GET', "https://api.github.com/repositories?client_id={$clientId}&client_secret={$clientSecret}&since={$since}", []);
+        return $this->httpClient->request('GET', GithubEnum::URL_REPOSITORIES."?client_id={$clientId}&client_secret={$clientSecret}&since={$since}", []);
     }
 
 }
