@@ -12,7 +12,7 @@ routes:
       _method:  GET
 
   elasticSearch_sync:
-    pattern: /elastic-search/{token}/index
-    controller: App\Bundle\ElasticSearch\Controller\ElasticSearchSyncController;
+    pattern: /elastic-search/{token}/sync
+    controller: App\Bundle\ElasticSearch\Controller\ElasticSearchSyncController::startSync
     requirements:
       _method: GET
