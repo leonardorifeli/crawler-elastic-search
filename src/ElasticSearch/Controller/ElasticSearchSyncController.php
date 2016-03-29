@@ -10,24 +10,33 @@ class ElasticSearchSyncController
 
     private $elasticSearchSyncService;
 
-    private function getElasticSearchSyncService($app) {
-        if(!$this->elasticSearchSyncService) {
+    private function getElasticSearchSyncService($app)
+    {
+        if (!$this->elasticSearchSyncService) {
             $this->elasticSearchSyncService = $app['elasticSearch.sync.service'];
         }
 
         return $this->elasticSearchSyncService;
     }
 
-    public function startSync(Application $app, $token) {
+    public function startSync(Application $app, $token)
+    {
         set_time_limit(0);
 
-        if($token !== $app['config']['security']['token']){
+        if ($token !== $app['config']['security']['token']) {
             return new Response(json_encode(['error' => 'invalid token']));
         }
 
-        $syncOwner = $this->getElasticSearchSyncService($app)->createIndex('github');
+        $this->getElasticSearchSyncService($app)->createIndex('github/owner');
+        $this->getElasticSearchSyncService($app)->createIndex('github/repository');
 
-        return;
+        echo "Syncing...";
+
+        $syncOwner = $this->getElasticSearchSyncService($app)->syncAllOwner();
+
+        echo "Finished! Bye.";
+
+        return new Response('Sincronizado');
     }
 
 }
