@@ -45,14 +45,20 @@ class GithubOwnerService
 
     private function insertOrUpdate($entity)
     {
-        if(!$entity->getId()) {
+        if (!$entity->getId()) {
             $entity = $this->em->persist($entity);
             $entity = $this->em->flush();
-        }else{
+        } else {
             $entity = $this->em->flush();
         }
 
         return $entity;
+    }
+
+    public function getAll()
+    {
+        $entities = $this->getRepository()->findAll();
+        return $entities;
     }
 
 }
