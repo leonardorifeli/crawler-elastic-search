@@ -36,11 +36,11 @@ class GithubRepositoryService
 
         $owner = $this->githubOwnerService->getByProvider($request->owner->id);
 
-        if(!$owner){
+        if (!$owner) {
             $owner = $this->githubOwnerService->createByRequest($request->owner);
         }
 
-        if(!$owner) return;
+        if (!$owner) return;
 
         $entity = new GithubRepository();
         $entity->setOwner($owner);
@@ -61,14 +61,23 @@ class GithubRepositoryService
 
     private function insertOrUpdate($entity)
     {
-        if(!$entity->getId()) {
+        if (!$entity->getId()) {
             $entity = $this->em->persist($entity);
             $entity = $this->em->flush();
-        }else{
+        } else {
             $entity = $this->em->flush();
         }
 
         return $entity;
+    }
+
+    public function getAllByOwner($owner)
+    {
+        $entities = $this->getRepository()->findBy([
+            'owner' => $owner
+        ]);
+
+        return $entities;
     }
 
 }
