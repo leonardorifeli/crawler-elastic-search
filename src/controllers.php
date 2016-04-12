@@ -24,7 +24,7 @@ $app->error(function (\Exception $e, $code) use ($app) {
         return;
     }
 
-    $page = 404 == $code ? '404.html' : '500.html';
+    //$page = 404 == $code ? '404.html' : '500.html';
 
     return new Response(json_encode(array('message' => $e->getMessage())));
 });
