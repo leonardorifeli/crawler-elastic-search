@@ -27,10 +27,10 @@ class ElasticSearchSyncController
             return new Response(json_encode(['error' => 'invalid token']));
         }
 
+        echo "Syncing...";
+
         $this->getElasticSearchSyncService($app)->createIndex('github/owner');
         $this->getElasticSearchSyncService($app)->createIndex('github/repository');
-
-        echo "Syncing...";
 
         $syncOwner = $this->getElasticSearchSyncService($app)->syncAllOwner();
 
