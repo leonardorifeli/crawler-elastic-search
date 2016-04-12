@@ -2,8 +2,8 @@
 
 namespace App\Bundle\ElasticSearch\Business\Service;
 
-use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
+use Elasticsearch\Client();
 
 class ElasticSearchSyncService
 {
@@ -29,7 +29,7 @@ class ElasticSearchSyncService
 
     public function createIndex($index)
     {
-        $response = $this->checkIndexAndCreate($index);
+        $response = $this->checkOrCreateIndex($index);
         return $response;
     }
 
@@ -49,9 +49,10 @@ class ElasticSearchSyncService
                 'type' => $owner->getType()
             ];
 
+            $data[] = '-i';
             $data[] = $objectData;
 
-            $request = $this->sendRequest('github/owner/'.$owner->getId(), $objectData, 'POST');
+            $request = $this->sendRequest('github/owner/'.$owner->getId(), $data, 'POST');
 
             $repositories = $this->syncRepositoriesByOwner($owner);
         }
@@ -85,10 +86,10 @@ class ElasticSearchSyncService
         return $data;
     }
 
-    private function checkIndexAndCreate($index)
+    private function checkOrCreateIndex($index)
     {
         $url = "{$this->url}/{$index}";
-
+        
         $request = $this->httpClient->request('GET', $url, ["-i"]);
 
         if ($request->getStatusCode() != Response::HTTP_OK) {
@@ -101,6 +102,15 @@ class ElasticSearchSyncService
     private function sendRequest($index, $data, $type)
     {
         $url = "{$this->url}/{$index}";
+
+        if(!array_key_exists(0, $data) || !array_key_exists(1, $data)) return [];
+
+        $data = json_encode($data[1]);
+
+        var_dump($url);
+        var_dump($data);
+        die;
+
         $request = $this->httpClient->request($type, $url, $data);
         dump($request);
         die;
