@@ -22,10 +22,10 @@ $app->register(new TranslationServiceProvider(), array(
     'locale_fallbacks' => array('en'),
 ));
 
-$app['translator'] = $app->extend('translator', function($translator, $app) {
+$app['translator'] = $app->extend('translator', function ($translator, $app) {
     $translator->addLoader('yaml', new YamlFileLoader());
 
-    $translator->addResource('yaml', __DIR__.'/locale/en.yml', 'en');
+    $translator->addResource('yaml', __DIR__ . '/locale/en.yml', 'en');
 
     return $translator;
 });
@@ -39,7 +39,7 @@ $app->register(new SessionServiceProvider());
 
 $app['twig'] = $app->extend('twig', function ($twig, $app) {
     $twig->addFunction(new \Twig_SimpleFunction('asset', function ($asset) use ($app) {
-        return $app['request_stack']->getMasterRequest()->getBasepath().'/'.$asset;
+        return $app['request_stack']->getMasterRequest()->getBasepath() . '/' . $asset;
     }));
     return $twig;
 });
@@ -47,26 +47,26 @@ $app['twig'] = $app->extend('twig', function ($twig, $app) {
 $app->register(new DerAlex\Pimple\YamlConfigServiceProvider('../config/config.yml'));
 
 $app->register(
-new Silex\Provider\DoctrineServiceProvider(), array(
-    'db.options'    => array(
+    new Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => array(
         'driver' => $app['config']['database']['driver'],
-        'host'       => $app['config']['database']['host'],
+        'host' => $app['config']['database']['host'],
         'dbname' => $app['config']['database']['database'],
         'user' => $app['config']['database']['user'],
         'password' => $app['config']['database']['password'],
-        'charset'       => 'utf8',
+        'charset' => 'utf8',
         'driverOptions' => array(1002 => 'SET NAMES utf8',),
     ),
 ));
 
 $app->register(new DoctrineOrmServiceProvider, array(
-    "orm.proxies_dir" => __DIR__."../tmp/proxies",
+    "orm.proxies_dir" => __DIR__ . "../tmp/proxies",
     "orm.em.options" => array(
         "mappings" => array(
             array(
                 "type" => "annotation",
                 "namespace" => "App\Bundle\Crawler\Entity",
-                "path" => __DIR__."App\Bundle\Crawler\Entity",
+                "path" => __DIR__ . "App\Bundle\Crawler\Entity",
             )
         ),
     ),
@@ -85,7 +85,11 @@ $app['github.sync.service'] = function () use ($app) {
 };
 
 $app['elasticSearch.sync.service'] = function () use ($app) {
-    return new App\Bundle\ElasticSearch\Business\Service\ElasticSearchSyncService($app['config']['elasticSearch']['url']);
+    $url = $app['config']['elasticSearch']['url'];
+    $githubOwnerService = $app['github.owner.service'];
+    $githubRepositoryService = $app['github.repository.service'];
+
+    return new App\Bundle\ElasticSearch\Business\Service\ElasticSearchSyncService($url, $githubOwnerService, $githubRepositoryService);
 };
 
 return $app;
