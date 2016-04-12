@@ -36,7 +36,8 @@
         "deralex/yaml-config-service-provider": "2.0.*@dev",
         "symfony/http-kernel": "^2.8",
         "guzzlehttp/guzzle": "^6.1",
-        "twig/twig": ">=1.8,<2.0-dev"
+        "twig/twig": ">=1.8,<2.0-dev",
+        "elasticsearch/elasticsearch": "^2.1"
     },
     "autoload": {
         "psr-4": { "App\\Bundle\\": "src/" }
